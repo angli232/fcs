@@ -1,5 +1,5 @@
 // Package fcs implements a FCS (Flow Cytometry Standard) file decoder.
-package fcs 
+package fcs
 
 import (
 	"bufio"
@@ -27,14 +27,14 @@ var (
 // FCS 3.1 Standard. 3.2.8
 // Their existance will be verified when decoding the TEXT segment.
 var requiredKeywords = []string{
-	"$BEGINANALYSIS",
-	"$BEGINDATA",
-	"$BEGINSTEXT",
+	//	"$BEGINANALYSIS",
+	//	"$BEGINDATA",
+	//	"$BEGINSTEXT",
 	"$BYTEORD",
 	"$DATATYPE",
-	"$ENDANALYSIS",
-	"$ENDDATA",
-	"$ENDSTEXT",
+	//	"$ENDANALYSIS",
+	//	"$ENDDATA",
+	//	"$ENDSTEXT",
 	"$MODE",
 	"$NEXTDATA",
 	"$PAR",

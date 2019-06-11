@@ -45,8 +45,21 @@ func BenchmarkMetadataDecoder(b *testing.B) {
 	}
 }
 
-func TestDecoder(t *testing.T) {
+func TestDecoder_Stratedigm(t *testing.T) {
 	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+
+	_, _, err = fcs.NewDecoder(f).Decode()
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestDecoder_StratedigmFCS20(t *testing.T) {
+	f, err := os.Open(filepath.Join("testdata", "Stratedigm_FCS2.0.fcs"))
 	if err != nil {
 		t.Fatal(err)
 	}
