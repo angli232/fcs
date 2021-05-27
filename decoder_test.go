@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/springerlab/fcs"
+	"github.com/Andeling/fcs"
 )
 
 func BenchmarkDecoder(b *testing.B) {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm.fcs"))
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -28,7 +28,7 @@ func BenchmarkDecoder(b *testing.B) {
 }
 
 func BenchmarkMetadataDecoder(b *testing.B) {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm.fcs"))
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -46,7 +46,7 @@ func BenchmarkMetadataDecoder(b *testing.B) {
 }
 
 func TestDecoder_Stratedigm(t *testing.T) {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm.fcs"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,7 +59,7 @@ func TestDecoder_Stratedigm(t *testing.T) {
 }
 
 func TestDecoder_StratedigmFCS20(t *testing.T) {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm_FCS2.0.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm_FCS2.0.fcs"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +72,7 @@ func TestDecoder_StratedigmFCS20(t *testing.T) {
 }
 
 func ExampleDecoder_DecodeMetadata() {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm.fcs"))
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
@@ -93,7 +93,7 @@ func ExampleDecoder_DecodeMetadata() {
 }
 
 func ExampleDecoder_Decode() {
-	f, err := os.Open(filepath.Join("testdata", "Stratedigm.fcs"))
+	f, err := os.Open(filepath.Join("../fcs_testdata", "Stratedigm.fcs"))
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
