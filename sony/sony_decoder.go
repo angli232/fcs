@@ -4,6 +4,11 @@ package sony
 
 import "fmt"
 
+type SonyKeywords struct {
+
+
+}
+
 func sony_decoder() {
   fmt.Println(".expdat file decoder")
 }
