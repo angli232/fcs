@@ -55,17 +55,17 @@ type Parameter struct {
 	ParameterID int
 
 	// Required
-	BitLength         int        `keyword:"$PnB"` // Number of bits reserved for parameter number n.
-	AmplificationType [2]float64 `keyword:"$PnE"` // Amplification type for parameter n.
-	ShortName         string     `keyword:"$PnN"` // Short name for parameter n.
-	Range             int        `keyword:"$PnR"` // Range for parameter number n.
+	BitLength         int        `keyword:"$PnB"`                       // Number of bits reserved for parameter number n.
+	AmplificationType [2]float64 `keyword:"$PnE"`                       // Amplification type for parameter n.
+	ShortName         string     `keyword:"$PnN" json:"paramShortName"` // Short name for parameter n.
+	Range             int        `keyword:"$PnR"`                       // Range for parameter number n.
 
 	// Optional
-	Name            string   `keyword:"$PnS" json:"name,omitempty"` // Name used for parameter n.
-	AmplifierGain   *float64 `keyword:"$PnG" json:"amplifiergain,omitempty"` // Amplifier gain used for acquisition of parameter n.
-	DetectorType    string   `keyword:"$PnT" json:"detectortype,omitempty"` // Detector type for parameter n.
+	Name            string   `keyword:"$PnS" json:"name,omitempty"`            // Name used for parameter n.
+	AmplifierGain   *float64 `keyword:"$PnG" json:"amplifiergain,omitempty"`   // Amplifier gain used for acquisition of parameter n.
+	DetectorType    string   `keyword:"$PnT" json:"detectortype,omitempty"`    // Detector type for parameter n.
 	DetectorVoltage *float64 `keyword:"$PnV" json:"detectorvoltage,omitempty"` // Detector voltage for parameter n.
-	OpticalFilter   string   `keyword:"$PnF" json:"opticalfilter,omitempty"` // Name of optical filter for parameter n.
+	OpticalFilter   string   `keyword:"$PnF" json:"opticalfilter,omitempty"`   // Name of optical filter for parameter n.
 
 	// Non-standard parameters
 	DetectorName string   `json:",omitempty"`
@@ -78,43 +78,43 @@ type Metadata struct {
 	FCSVersion string
 
 	// Required parameters (FCS 3.1. Section 3.2.18)
-	BeginSupplementalText int    `keyword:"$BEGINSTEXT"`    // Byte-offset to the beginning of a supplemental TEXT segment.
-	EndSupplementalText   int    `keyword:"$ENDSTEXT"`      // Byte-offset to the last byte of a supplemental TEXT segment.
-	BeginData             int    `keyword:"$BEGINDATA"`     // Byte-offset to the beginning of the DATA segment.
-	EndData               int    `keyword:"$ENDDATA"`       // Byte-offset to the last byte of the DATA segment.
-	BeginAnalysis         int    `keyword:"$BEGINANALYSIS"` // Byte-offset to the beginning of the ANALYSIS segment.
-	EndAnalysis           int    `keyword:"$ENDANALYSIS"`   // Byte-offset to the last byte of the ANALYSIS segment.
-	NextData              int    `keyword:"$NEXTDATA"`      // Byte offset to next data set in the file.
-	ByteOrder             string `keyword:"$BYTEORD"`       // Byte order for data acquisition computer.
-	DataType              string `keyword:"$DATATYPE"`      // Type of data in DATA segment (ASCII, integer, floating point).
-	Mode                  string `keyword:"$MODE"`          // Data mode (list mode - preferred, histogram - deprecated).
-	NumEvents             int    `keyword:"$TOT"`           // Total number of events in the data set.
-	NumParameters         int    `keyword:"$PAR"`           // Number of parameters in an event.
-  Parameters            []Parameter `json:"parameters"`
+	BeginSupplementalText int         `keyword:"$BEGINSTEXT"`         // Byte-offset to the beginning of a supplemental TEXT segment.
+	EndSupplementalText   int         `keyword:"$ENDSTEXT"`           // Byte-offset to the last byte of a supplemental TEXT segment.
+	BeginData             int         `keyword:"$BEGINDATA"`          // Byte-offset to the beginning of the DATA segment.
+	EndData               int         `keyword:"$ENDDATA"`            // Byte-offset to the last byte of the DATA segment.
+	BeginAnalysis         int         `keyword:"$BEGINANALYSIS"`      // Byte-offset to the beginning of the ANALYSIS segment.
+	EndAnalysis           int         `keyword:"$ENDANALYSIS"`        // Byte-offset to the last byte of the ANALYSIS segment.
+	NextData              int         `keyword:"$NEXTDATA"`           // Byte offset to next data set in the file.
+	ByteOrder             string      `keyword:"$BYTEORD"`            // Byte order for data acquisition computer.
+	DataType              string      `keyword:"$DATATYPE"`           // Type of data in DATA segment (ASCII, integer, floating point).
+	Mode                  string      `keyword:"$MODE"`               // Data mode (list mode - preferred, histogram - deprecated).
+	NumEvents             int         `keyword:"$TOT" json:"nEvents"` // Total number of events in the data set.
+	NumParameters         int         `keyword:"$PAR" json:"nParams"` // Number of parameters in an event.
+	Parameters            []Parameter `json:"parameters"`
 
 	// (Some) Optional parameters (FCS 3.1. Section 3.2.19)
-	FileName            string    `keyword:"$FIL" json:"filename,omitempty"`                              // Name of the data file containing the data set.
-	Operator            string    `keyword:"$OP" json:"operator,omitempty"`                               // Name of flow cytometry operator.
-	PlateID             string    `keyword:"$PLATEID,PLATE_ID,PLATE ID" json:"plateid,omitempty"`        // Plate identifier. Stratedigm(PLATE_ID, not globally unique). LSRII(PLATE ID)
+	FileName            string    `keyword:"$FIL" json:"filename,omitempty"`                               // Name of the data file containing the data set.
+	Operator            string    `keyword:"$OP" json:"operator,omitempty"`                                // Name of flow cytometry operator.
+	PlateID             string    `keyword:"$PLATEID,PLATE_ID,PLATE ID" json:"plateid,omitempty"`          // Plate identifier. Stratedigm(PLATE_ID, not globally unique). LSRII(PLATE ID)
 	PlateName           string    `keyword:"$PLATENAME,PLATE NAME,SAMPLE_NAME" json:"platename,omitempty"` // Plate name. LSRII(PLATE NAME). Stratedigm(SAMPLE_NAME)
-	WellID              string    `keyword:"$WELLID,WELL ID,WELL_ID" json:"wellid,omitempty"`           // Well identifier (e.g. A07). LSRII(WELL ID) Stratedigm(WELL_ID)
-	Date                time.Time `keyword:"$DATE" json:"date,omitempty"`                             // Date of data set acquisition.
+	WellID              string    `keyword:"$WELLID,WELL ID,WELL_ID" json:"wellid,omitempty"`              // Well identifier (e.g. A07). LSRII(WELL ID) Stratedigm(WELL_ID)
+	Date                time.Time `keyword:"$DATE" json:"date,omitempty"`                                  // Date of data set acquisition.
 	BeginTime           time.Time `keyword:"$BTIM" json:"begintime,omitempty"`                             // Clock time at beginning of data acquisition.
-	EndTime             time.Time `keyword:"$ETIM" json:"endtime,omitempty"`                             // Clock time at end of data acquisition.
-	ComputerSystem      string    `keyword:"$SYS" json:"computersystem,omitempty"`                              // Type of computer and its operating system.
-	CytometerType       string    `keyword:"$CYT" json:"computertype,omitempty"`                              // Type of flow cytometer.
-	CytometerSN         string    `keyword:"$CYTSN,CYTNUM" json:"cytometersn,omitempty"`                     // Flow cytometer serial number. LSRII(CYTNUM)
-	TimeStep            *float64  `keyword:"$TIMESTEP" json:"timestep,omitempty"`                         // Time step for time parameter.
-	Volume              *float64  `keyword:"$VOL" json:"volume,omitempty"`                              // Volume of sample run during data acquisition (in nanoliters).
-	SpecimenSource      string    `keyword:"$SRC" json:"specimensource,omitempty"`                              // Source of the specimen (patient name, cell types)
-	SpecimenLabel       string    `keyword:"$SMNO" json:"specimenlabel,omitempty"`                             // Specimen (e.g., tube) label.
-	SpecimenType        string    `keyword:"$CELLS" json:"specimentype,omitempty"`                            // Type of cells or other objects measured.
-	NumLostEvent        int       `keyword:"$LOST" json:"numlostevent,omitempty"`                             // Number of events lost due to computer busy.
-	NumAbortedEvent     int       `keyword:"$ABRT" json:"numabortedevent,omitempty"`                             // Events lost due to data acquisition electronic coincidence.
-	Originality         string    `keyword:"$ORIGINALITY" json:"originality,omitempty"`                      // Information whether the FCS data set has been modified (any part of it) or is original as acquired by the instrument.
-	Institution         string    `keyword:"$INST" json:"institution,omitempty"`                             // Institution at which data was acquired.
-	Comment             string    `keyword:"$COM" json:"comment,omitempty"`                              // Comment.
-	ExperimentInitiator string    `keyword:"$EXP" json:"experimentinitiator,omitempty"`                              // The name of the person initiating the experiment.
+	EndTime             time.Time `keyword:"$ETIM" json:"endtime,omitempty"`                               // Clock time at end of data acquisition.
+	ComputerSystem      string    `keyword:"$SYS" json:"computersystem,omitempty"`                         // Type of computer and its operating system.
+	CytometerType       string    `keyword:"$CYT" json:"computertype,omitempty"`                           // Type of flow cytometer.
+	CytometerSN         string    `keyword:"$CYTSN,CYTNUM" json:"cytometersn,omitempty"`                   // Flow cytometer serial number. LSRII(CYTNUM)
+	TimeStep            *float64  `keyword:"$TIMESTEP" json:"timestep,omitempty"`                          // Time step for time parameter.
+	Volume              *float64  `keyword:"$VOL" json:"volume,omitempty"`                                 // Volume of sample run during data acquisition (in nanoliters).
+	SpecimenSource      string    `keyword:"$SRC" json:"specimensource,omitempty"`                         // Source of the specimen (patient name, cell types)
+	SpecimenLabel       string    `keyword:"$SMNO" json:"specimenlabel,omitempty"`                         // Specimen (e.g., tube) label.
+	SpecimenType        string    `keyword:"$CELLS" json:"specimentype,omitempty"`                         // Type of cells or other objects measured.
+	NumLostEvent        int       `keyword:"$LOST" json:"numlostevent,omitempty"`                          // Number of events lost due to computer busy.
+	NumAbortedEvent     int       `keyword:"$ABRT" json:"numabortedevent,omitempty"`                       // Events lost due to data acquisition electronic coincidence.
+	Originality         string    `keyword:"$ORIGINALITY" json:"originality,omitempty"`                    // Information whether the FCS data set has been modified (any part of it) or is original as acquired by the instrument.
+	Institution         string    `keyword:"$INST" json:"institution,omitempty"`                           // Institution at which data was acquired.
+	Comment             string    `keyword:"$COM" json:"comment,omitempty"`                                // Comment.
+	ExperimentInitiator string    `keyword:"$EXP" json:"experimentinitiator,omitempty"`                    // The name of the person initiating the experiment.
 
 	// Non-standard parameters
 	Software       string   `keyword:"SOFTWARE,CREATOR" json:",omitempty"`                // Stratedigm(SOFTWARE), LSRII(CREATOR)

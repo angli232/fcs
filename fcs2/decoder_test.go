@@ -2,17 +2,15 @@ package fcs2_test
 
 import (
 	"fmt"
+	"github.com/nsbuitrago/fcs2/fcs2"
 	"os"
-	"path/filepath"
 	"testing"
-
-	"github.com/nsbuitrago/fcs2"
 )
 
-const testFile string = "facs_validation.fcs"
+const testFile string = "../testdata/facs_validation.fcs"
 
 func BenchmarkDecoder(b *testing.B) {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -22,7 +20,7 @@ func BenchmarkDecoder(b *testing.B) {
 		b.StopTimer()
 		f.Seek(0, 0)
 		b.StartTimer()
-		_, _, err = fcs.NewDecoder(f).Decode()
+		_, _, err = fcs2.NewDecoder(f).Decode()
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -30,7 +28,7 @@ func BenchmarkDecoder(b *testing.B) {
 }
 
 func BenchmarkMetadataDecoder(b *testing.B) {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -40,7 +38,7 @@ func BenchmarkMetadataDecoder(b *testing.B) {
 		b.StopTimer()
 		f.Seek(0, 0)
 		b.StartTimer()
-		_, err = fcs.NewDecoder(f).DecodeMetadata()
+		_, err = fcs2.NewDecoder(f).DecodeMetadata()
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -48,40 +46,40 @@ func BenchmarkMetadataDecoder(b *testing.B) {
 }
 
 func TestDecoder_Stratedigm(t *testing.T) {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer f.Close()
 
-	_, _, err = fcs.NewDecoder(f).Decode()
+	_, _, err = fcs2.NewDecoder(f).Decode()
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func TestDecoder_StratedigmFCS20(t *testing.T) {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer f.Close()
 
-	_, _, err = fcs.NewDecoder(f).Decode()
+	_, _, err = fcs2.NewDecoder(f).Decode()
 	if err != nil {
 		t.Fatal(err)
 	}
 }
 
 func ExampleDecoder_DecodeMetadata() {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
 	}
 	defer f.Close()
 
-	m, err := fcs.NewDecoder(f).DecodeMetadata()
+	m, err := fcs2.NewDecoder(f).DecodeMetadata()
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
@@ -91,18 +89,18 @@ func ExampleDecoder_DecodeMetadata() {
 	fmt.Printf("NumEvents: %d\n", m.NumEvents)
 	// Output:
 	// NumParameters: 10
-  //NumEvents: 10925
+	//NumEvents: 10925
 }
 
 func ExampleDecoder_Decode() {
-	f, err := os.Open(filepath.Join("fcs_testdata/", testFile))
+	f, err := os.Open(testFile)
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
 	}
 	defer f.Close()
 
-	m, data, err := fcs.NewDecoder(f).Decode()
+	m, data, err := fcs2.NewDecoder(f).Decode()
 	if err != nil {
 		fmt.Printf("%s", err)
 		return
@@ -120,9 +118,18 @@ func ExampleDecoder_Decode() {
 		fmt.Printf("  %s: %.4f\n", p[i].ShortName, data[i])
 	}
 
-	fmt.Printf("Event %d:\n", 1179)
-	for i := 0; i < np; i++ {
-		fmt.Printf("  %s: %.4f\n", p[i].ShortName, data[i+np*1179])
-	}
+	// NumParameters: 10
+	// NumEvents: 10925
+	// Event 0:
+	// TIME: 0.3664
+	// FSC-A: 327676.0938
+	// FSC-H: 312099.1875
+	// FSC-W: 255.0000
+	// SSC-A: 341595.7500
+	// SSC-H: 230399.6875
+	// SSC-W: 255.0000
+	// FL1-A: 584.0190
+	// FL2-A: 16641.4102
+	// FL4-A: 2582.0559
 
 }
