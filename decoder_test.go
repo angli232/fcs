@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Andeling/fcs"
+	"github.com/angli232/fcs"
 )
 
 func BenchmarkDecoder(b *testing.B) {
